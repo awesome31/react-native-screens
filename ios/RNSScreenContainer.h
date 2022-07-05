@@ -1,8 +1,16 @@
+#ifdef RN_FABRIC_ENABLED
+#import <React/RCTViewComponentView.h>
+#else
+#endif
+
 #import <React/RCTViewManager.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol RNSScreenContainerDelegate
 
 - (void)markChildUpdated;
+- (void)updateContainer;
 
 @end
 
@@ -12,8 +20,26 @@
 
 @interface RNScreensViewController : UIViewController <RNScreensViewControllerDelegate>
 
-@end
-
-@interface RNSScreenContainerView : UIView <RNSScreenContainerDelegate>
+- (UIViewController *)findActiveChildVC;
 
 @end
+
+@interface RNSScreenContainerManager : RCTViewManager
+
+@end
+
+@interface RNSScreenContainerView :
+#ifdef RN_FABRIC_ENABLED
+    RCTViewComponentView <RNSScreenContainerDelegate>
+#else
+    UIView <RNSScreenContainerDelegate, RCTInvalidating>
+#endif
+
+@property (nonatomic, retain) UIViewController *controller;
+@property (nonatomic, retain) NSMutableArray *reactSubviews;
+
+- (void)maybeDismissVC;
+
+@end
+
+NS_ASSUME_NONNULL_END

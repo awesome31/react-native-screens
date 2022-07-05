@@ -1,19 +1,18 @@
 import React from 'react';
 import {
   ScrollView,
-  SafeAreaView,
   StyleSheet,
   Text,
   I18nManager,
   Platform,
   StatusBar,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import RNRestart from 'react-native-restart';
 
-import {ListItem, SettingsSwitch} from './src/shared';
+import { ListItem, SettingsSwitch } from './src/shared';
 
 import SimpleNativeStack from './src/screens/SimpleNativeStack';
 import StackPresentation from './src/screens/StackPresentation';
@@ -25,6 +24,12 @@ import StackReactNavigation4 from './src/screens/StackReactNavigation4';
 import Modals from './src/screens/Modals';
 import Orientation from './src/screens/Orientation';
 import SearchBar from './src/screens/SearchBar';
+import Events from './src/screens/Events';
+import Gestures from './src/screens/Gestures';
+
+import { enableFreeze } from 'react-native-screens';
+
+enableFreeze();
 
 if (Platform.OS === 'android') {
   StatusBar.setTranslucent(true);
@@ -85,8 +90,18 @@ const SCREENS: Record<
     type: 'playground',
   },
   SearchBar: {
-    title: 'Search bar (iOS)',
+    title: 'Search bar',
     component: SearchBar,
+    type: 'playground',
+  },
+  Events: {
+    title: 'Events',
+    component: Events,
+    type: 'playground',
+  },
+  Gestures: {
+    title: 'Gestures',
+    component: Gestures,
     type: 'playground',
   },
 };
@@ -103,39 +118,41 @@ interface MainScreenProps {
   navigation: StackNavigationProp<RootStackParamList, 'Main'>;
 }
 
-const MainScreen = ({navigation}: MainScreenProps): JSX.Element => (
-  <ScrollView>
-    <SafeAreaView>
-      <SettingsSwitch
-        style={styles.switch}
-        label="Right to left"
-        value={I18nManager.isRTL}
-        onValueChange={() => {
-          I18nManager.forceRTL(!I18nManager.isRTL);
-          RNRestart.Restart();
-        }}
-      />
-      <Text style={styles.label}>Examples</Text>
-      {Object.keys(SCREENS)
-        .filter((name) => SCREENS[name].type === 'example')
-        .map((name) => (
-          <ListItem
-            key={name}
-            title={SCREENS[name].title}
-            onPress={() => navigation.navigate(name)}
-          />
-        ))}
-      <Text style={styles.label}>Playgrounds</Text>
-      {Object.keys(SCREENS)
-        .filter((name) => SCREENS[name].type === 'playground')
-        .map((name) => (
-          <ListItem
-            key={name}
-            title={SCREENS[name].title}
-            onPress={() => navigation.navigate(name)}
-          />
-        ))}
-    </SafeAreaView>
+const MainScreen = ({ navigation }: MainScreenProps): JSX.Element => (
+  <ScrollView testID="root-screen-examples-scrollview">
+    <SettingsSwitch
+      style={styles.switch}
+      label="Right to left"
+      value={I18nManager.isRTL}
+      onValueChange={() => {
+        I18nManager.forceRTL(!I18nManager.isRTL);
+        RNRestart.Restart();
+      }}
+    />
+    <Text style={styles.label} testID="root-screen-examples-header">
+      Examples
+    </Text>
+    {Object.keys(SCREENS)
+      .filter((name) => SCREENS[name].type === 'example')
+      .map((name) => (
+        <ListItem
+          key={name}
+          testID={`root-screen-example-${name}`}
+          title={SCREENS[name].title}
+          onPress={() => navigation.navigate(name)}
+        />
+      ))}
+    <Text style={styles.label}>Playgrounds</Text>
+    {Object.keys(SCREENS)
+      .filter((name) => SCREENS[name].type === 'playground')
+      .map((name) => (
+        <ListItem
+          key={name}
+          testID={`root-screen-playground-${name}`}
+          title={SCREENS[name].title}
+          onPress={() => navigation.navigate(name)}
+        />
+      ))}
   </ScrollView>
 );
 
@@ -147,7 +164,7 @@ const ExampleApp = (): JSX.Element => (
       }}>
       <Stack.Screen
         name="Main"
-        options={{title: '📱 React Native Screens Examples'}}
+        options={{ title: '📱 React Native Screens Examples' }}
         component={MainScreen}
       />
       {Object.keys(SCREENS).map((name) => (
@@ -155,7 +172,7 @@ const ExampleApp = (): JSX.Element => (
           key={name}
           name={name}
           getComponent={() => SCREENS[name].component}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       ))}
     </Stack.Navigator>

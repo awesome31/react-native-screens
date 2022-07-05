@@ -29,7 +29,7 @@ export default function App(): JSX.Element {
 }
 
 function First({navigation}: NativeStackScreenProps<ParamListBase>) {
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     navigation.setOptions({
       searchBar: searchBarOptions,
     });
@@ -39,12 +39,14 @@ function First({navigation}: NativeStackScreenProps<ParamListBase>) {
 
   const searchBarOptions: SearchBarProps = {
     barTintColor: 'powderblue',
+    tintColor: 'red',
     textColor: 'red',
     hideWhenScrolling: true,
     obscureBackground: false,
     hideNavigationBar: false,
     autoCapitalize: 'sentences',
     placeholder: 'Some text',
+    cancelButtonText: 'Some text',
     onChangeText: (e: NativeSyntheticEvent<{text: string}>) =>
       setSearch(e.nativeEvent.text),
     onCancelButtonPress: () => console.warn('Cancel button pressed'),
