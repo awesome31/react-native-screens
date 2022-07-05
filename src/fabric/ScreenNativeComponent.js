@@ -19,6 +19,19 @@ type ScreenDismissedEvent = $ReadOnly<{|
   dismissCount: Int32,
 |}>;
 
+type TransitionProgressEvent = $ReadOnly<{|
+  progress: Double,
+  closing: Int32,
+  goingForward: Int32,
+|}>;
+
+type GestureResponseDistanceType = $ReadOnly<{|
+  start: Float,
+  end: Float,
+  top: Float,
+  bottom: Float,
+|}>;
+
 type StackPresentation =
   | 'push'
   | 'modal'
@@ -39,6 +52,8 @@ type StackAnimation =
   | 'slide_from_bottom'
   | 'fade_from_bottom';
 
+type SwipeDirection = 'vertical' | 'horizontal';
+
 type ReplaceAnimation = 'pop' | 'push';
 
 export type NativeProps = $ReadOnly<{|
@@ -46,9 +61,14 @@ export type NativeProps = $ReadOnly<{|
   onAppear?: ?BubblingEventHandler<ScreenEvent>,
   onDisappear?: ?BubblingEventHandler<ScreenEvent>,
   onDismissed?: ?BubblingEventHandler<ScreenDismissedEvent>,
+  onNativeDismissCancelled?: ?BubblingEventHandler<ScreenDismissedEvent>,
   onWillAppear?: ?BubblingEventHandler<ScreenEvent>,
   onWillDisappear?: ?BubblingEventHandler<ScreenEvent>,
+  onTransitionProgress?: ?BubblingEventHandler<TransitionProgressEvent>,
+  customAnimationOnSwipe?: boolean,
   fullScreenSwipeEnabled?: boolean,
+  homeIndicatorHidden?: boolean,
+  preventNativeDismiss?: boolean,
   gestureEnabled?: WithDefault<boolean, true>,
   statusBarColor?: ColorValue,
   statusBarHidden?: boolean,
@@ -56,15 +76,18 @@ export type NativeProps = $ReadOnly<{|
   statusBarAnimation?: string,
   statusBarStyle?: string,
   statusBarTranslucent?: boolean,
+  gestureResponseDistance?: GestureResponseDistanceType,
   stackPresentation?: WithDefault<StackPresentation, 'push'>,
   stackAnimation?: WithDefault<StackAnimation, 'default'>,
   transitionDuration?: WithDefault<Int32, 350>,
-  // TODO: implement these props on iOS
   replaceAnimation?: WithDefault<ReplaceAnimation, 'pop'>,
+  swipeDirection?: WithDefault<SwipeDirection, 'horizontal'>,
+  hideKeyboardOnSwipe?: boolean,
+  activityState?: WithDefault<Float, -1.0>,
+  // TODO: implement these props on iOS
   navigationBarColor?: ColorValue,
   navigationBarHidden?: boolean,
   nativeBackButtonDismissalEnabled?: boolean,
-  activityState?: WithDefault<Int32, -1>,
 |}>;
 
 type ComponentType = HostComponent<NativeProps>;

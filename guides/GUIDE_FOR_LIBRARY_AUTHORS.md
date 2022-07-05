@@ -60,6 +60,11 @@ gestureResponseDistance: {
   bottom: 150,
 }
 ```
+
+###  `hideKeyboardOnSwipe` (iOS only)
+
+Whether the keyboard should hide when swiping to the previous screen. Defaults to `false`.
+
 ### `homeIndicatorHidden` (iOS only)
 
 Whether the home indicator should be hidden on this screen. Defaults to `false`.
@@ -292,6 +297,7 @@ To render a search bar use `ScreenStackHeaderSearchBarView` with `<SearchBar>` c
 - `autoCapitalize` - Controls whether the text is automatically auto-capitalized as it is entered by the user. Can be one of these: `none`, `words`, `sentences`, `characters`. Defaults to `sentences` on iOS and `'none'` on Android.
 - `autoFocus` - If `true` automatically focuses search bar when screen is appearing. (Android only)
 - `barTintColor` - The search field background color. By default bar tint color is translucent.
+- `tintColor` - The color for the cursor caret and cancel button text. (iOS only)
 - `cancelButtonText` - The text to be used instead of default `Cancel` button text. (iOS only)
 - `disableBackButtonOverride` - Default behavior is to prevent screen from going back when search bar is open (`disableBackButtonOverride: false`). If you don't want this to happen set `disableBackButtonOverride` to `true`. (Android only)
 - `hideNavigationBar` - Boolean indicating whether to hide the navigation bar during searching. Defaults to `true`. (iOS only)

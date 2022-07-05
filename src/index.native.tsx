@@ -103,6 +103,7 @@ const ScreensNativeModules = {
   get NativeScreenContainer() {
     NativeScreenContainerValue =
       NativeScreenContainerValue ||
+      FabricComponents.ScreenContainer ||
       requireNativeComponent('RNSScreenContainer');
     return NativeScreenContainerValue;
   },
@@ -111,7 +112,8 @@ const ScreensNativeModules = {
     NativeScreenNavigationContainerValue =
       NativeScreenNavigationContainerValue ||
       (Platform.OS === 'ios'
-        ? requireNativeComponent('RNSScreenNavigationContainer')
+        ? FabricComponents.ScreenNavigationContainer ||
+          requireNativeComponent('RNSScreenNavigationContainer')
         : this.NativeScreenContainer);
     return NativeScreenNavigationContainerValue;
   },
@@ -141,13 +143,18 @@ const ScreensNativeModules = {
   },
 
   get NativeSearchBar() {
-    NativeSearchBar = NativeSearchBar || requireNativeComponent('RNSSearchBar');
+    NativeSearchBar =
+      NativeSearchBar ||
+      FabricComponents.SearchBar ||
+      requireNativeComponent('RNSSearchBar');
     return NativeSearchBar;
   },
 
   get NativeFullWindowOverlay() {
     NativeFullWindowOverlay =
-      NativeFullWindowOverlay || requireNativeComponent('RNSFullWindowOverlay');
+      NativeFullWindowOverlay ||
+      FabricComponents.FullWindowOverlay ||
+      requireNativeComponent('RNSFullWindowOverlay');
     return NativeFullWindowOverlay;
   },
 };
@@ -230,15 +237,9 @@ class Screen extends React.Component<ScreenProps> {
     const { enabled = ENABLE_SCREENS, ...rest } = this.props;
 
     if (enabled && isPlatformSupported) {
-      if (!AnimatedNativeScreen) {
-        if (ENABLE_FABRIC) {
-          AnimatedNativeScreen = ScreensNativeModules.NativeScreen;
-        } else {
-          AnimatedNativeScreen = Animated.createAnimatedComponent(
-            ScreensNativeModules.NativeScreen
-          ) as React.ComponentType<ScreenProps>;
-        }
-      }
+      AnimatedNativeScreen =
+        AnimatedNativeScreen ||
+        Animated.createAnimatedComponent(ScreensNativeModules.NativeScreen);
 
       let {
         // Filter out active prop in this case because it is unused and
@@ -248,6 +249,7 @@ class Screen extends React.Component<ScreenProps> {
         activityState,
         children,
         isNativeStack,
+        gestureResponseDistance,
         ...props
       } = rest;
 
@@ -275,6 +277,12 @@ class Screen extends React.Component<ScreenProps> {
           <AnimatedNativeScreen
             {...props}
             activityState={activityState}
+            gestureResponseDistance={{
+              start: gestureResponseDistance?.start ?? -1,
+              end: gestureResponseDistance?.end ?? -1,
+              top: gestureResponseDistance?.top ?? -1,
+              bottom: gestureResponseDistance?.bottom ?? -1,
+            }}
             // This prevents showing blank screen when navigating between multiple screens with freezing
             // https://github.com/software-mansion/react-native-screens/pull/1208
             ref={handleRef}

@@ -9,7 +9,9 @@ const root = path.resolve(__dirname, '..');
 
 const modules = [
   '@react-navigation/native',
+  '@react-navigation/stack',
   'react-navigation',
+  'react-native-reanimated',
   'react-navigation-stack',
   'react-native-safe-area-context',
   ...Object.keys(pack.peerDependencies),

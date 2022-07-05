@@ -1,6 +1,7 @@
 package com.swmansion.rnscreens
 
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException
+import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.MapBuilder
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
@@ -34,8 +35,12 @@ class ScreenViewManager : ViewGroupManager<Screen>(), RNSScreenManagerInterface<
         return Screen(reactContext)
     }
 
+    override fun setActivityState(view: Screen, activityState: Float) {
+        setActivityState(view, activityState.toInt())
+    }
+
     @ReactProp(name = "activityState")
-    override fun setActivityState(view: Screen, activityState: Int) {
+    fun setActivityState(view: Screen, activityState: Int) {
         if (activityState == -1) {
             // Null will be provided when activityState is set as an animated value and we change
             // it from JS to be a plain value (non animated).
@@ -139,10 +144,22 @@ class ScreenViewManager : ViewGroupManager<Screen>(), RNSScreenManagerInterface<
         view.nativeBackButtonDismissalEnabled = nativeBackButtonDismissalEnabled
     }
 
-    // these props are not available on Android, however we must override their getters
+    // these props are not available on Android, however we must override their setters
     override fun setFullScreenSwipeEnabled(view: Screen?, value: Boolean) = Unit
 
     override fun setTransitionDuration(view: Screen?, value: Int) = Unit
+
+    override fun setHideKeyboardOnSwipe(view: Screen?, value: Boolean) = Unit
+
+    override fun setCustomAnimationOnSwipe(view: Screen?, value: Boolean) = Unit
+
+    override fun setGestureResponseDistance(view: Screen?, value: ReadableMap?) = Unit
+
+    override fun setHomeIndicatorHidden(view: Screen?, value: Boolean) = Unit
+
+    override fun setPreventNativeDismiss(view: Screen?, value: Boolean) = Unit
+
+    override fun setSwipeDirection(view: Screen?, value: String?) = Unit
 
     override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any> {
         val map: MutableMap<String, Any> = MapBuilder.of(

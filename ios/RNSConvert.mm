@@ -1,5 +1,6 @@
 #import "RNSConvert.h"
 
+#ifdef RN_FABRIC_ENABLED
 @implementation RNSConvert
 
 + (RNSScreenStackPresentation)RNSScreenStackPresentationFromCppEquivalent:
@@ -47,4 +48,73 @@
   }
 }
 
++ (RNSScreenStackHeaderSubviewType)RNSScreenStackHeaderSubviewTypeFromCppEquivalent:
+    (facebook::react::RNSScreenStackHeaderSubviewType)subviewType
+{
+  switch (subviewType) {
+    case facebook::react::RNSScreenStackHeaderSubviewType::Left:
+      return RNSScreenStackHeaderSubviewTypeLeft;
+    case facebook::react::RNSScreenStackHeaderSubviewType::Right:
+      return RNSScreenStackHeaderSubviewTypeRight;
+    case facebook::react::RNSScreenStackHeaderSubviewType::Title:
+      return RNSScreenStackHeaderSubviewTypeTitle;
+    case facebook::react::RNSScreenStackHeaderSubviewType::Center:
+      return RNSScreenStackHeaderSubviewTypeCenter;
+    case facebook::react::RNSScreenStackHeaderSubviewType::SearchBar:
+      return RNSScreenStackHeaderSubviewTypeSearchBar;
+    case facebook::react::RNSScreenStackHeaderSubviewType::Back:
+      return RNSScreenStackHeaderSubviewTypeBackButton;
+  }
+}
+
++ (RNSScreenReplaceAnimation)RNSScreenReplaceAnimationFromCppEquivalent:
+    (facebook::react::RNSScreenReplaceAnimation)replaceAnimation
+{
+  switch (replaceAnimation) {
+    case facebook::react::RNSScreenReplaceAnimation::Pop:
+      return RNSScreenReplaceAnimationPop;
+    case facebook::react::RNSScreenReplaceAnimation::Push:
+      return RNSScreenReplaceAnimationPush;
+  }
+}
+
++ (RNSScreenSwipeDirection)RNSScreenSwipeDirectionFromCppEquivalent:
+    (facebook::react::RNSScreenSwipeDirection)swipeDirection
+{
+  switch (swipeDirection) {
+    case facebook::react::RNSScreenSwipeDirection::Horizontal:
+      return RNSScreenSwipeDirectionHorizontal;
+    case facebook::react::RNSScreenSwipeDirection::Vertical:
+      return RNSScreenSwipeDirectionVertical;
+  }
+}
+
++ (NSDictionary *)gestureResponseDistanceDictFromCppStruct:
+    (const facebook::react::RNSScreenGestureResponseDistanceStruct &)gestureResponseDistance
+{
+  return @{
+    @"start" : @(gestureResponseDistance.start),
+    @"end" : @(gestureResponseDistance.end),
+    @"top" : @(gestureResponseDistance.top),
+    @"bottom" : @(gestureResponseDistance.bottom),
+  };
+}
+
++ (UITextAutocapitalizationType)UITextAutocapitalizationTypeFromCppEquivalent:
+    (facebook::react::RNSSearchBarAutoCapitalize)autoCapitalize
+{
+  switch (autoCapitalize) {
+    case facebook::react::RNSSearchBarAutoCapitalize::Words:
+      return UITextAutocapitalizationTypeWords;
+    case facebook::react::RNSSearchBarAutoCapitalize::Sentences:
+      return UITextAutocapitalizationTypeSentences;
+    case facebook::react::RNSSearchBarAutoCapitalize::Characters:
+      return UITextAutocapitalizationTypeAllCharacters;
+    case facebook::react::RNSSearchBarAutoCapitalize::None:
+      return UITextAutocapitalizationTypeNone;
+  }
+}
+
 @end
+
+#endif // RN_FABRIC_ENABLED

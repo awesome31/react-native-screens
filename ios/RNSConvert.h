@@ -1,6 +1,4 @@
-#ifndef RNSConvert_h
-#define RNSConvert_h
-
+#ifdef RN_FABRIC_ENABLED
 #import <react/renderer/components/rnscreens/Props.h>
 #import "RNSEnums.h"
 
@@ -12,6 +10,21 @@
 + (RNSScreenStackAnimation)RNSScreenStackAnimationFromCppEquivalent:
     (facebook::react::RNSScreenStackAnimation)stackAnimation;
 
++ (RNSScreenStackHeaderSubviewType)RNSScreenStackHeaderSubviewTypeFromCppEquivalent:
+    (facebook::react::RNSScreenStackHeaderSubviewType)subviewType;
+
++ (RNSScreenReplaceAnimation)RNSScreenReplaceAnimationFromCppEquivalent:
+    (facebook::react::RNSScreenReplaceAnimation)replaceAnimation;
+
++ (RNSScreenSwipeDirection)RNSScreenSwipeDirectionFromCppEquivalent:
+    (facebook::react::RNSScreenSwipeDirection)swipeDirection;
+
++ (NSDictionary *)gestureResponseDistanceDictFromCppStruct:
+    (const facebook::react::RNSScreenGestureResponseDistanceStruct &)gestureResponseDistance;
+
++ (UITextAutocapitalizationType)UITextAutocapitalizationTypeFromCppEquivalent:
+    (facebook::react::RNSSearchBarAutoCapitalize)autoCapitalize;
+
 @end
 
-#endif /* RNSConvert_h */
+#endif // RN_FABRIC_ENABLED

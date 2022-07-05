@@ -150,8 +150,8 @@ const RouteView = ({
   const { options, render: renderScene } = descriptors[route.key];
   const {
     gestureEnabled,
-    gestureResponseDistance,
     headerShown,
+    hideKeyboardOnSwipe,
     homeIndicatorHidden,
     nativeBackButtonDismissalEnabled = false,
     navigationBarColor,
@@ -170,6 +170,7 @@ const RouteView = ({
   let {
     customAnimationOnSwipe,
     fullScreenSwipeEnabled,
+    gestureResponseDistance,
     stackAnimation,
     stackPresentation = 'push',
   } = options;
@@ -219,6 +220,7 @@ const RouteView = ({
       style={StyleSheet.absoluteFill}
       customAnimationOnSwipe={customAnimationOnSwipe}
       fullScreenSwipeEnabled={fullScreenSwipeEnabled}
+      hideKeyboardOnSwipe={hideKeyboardOnSwipe}
       homeIndicatorHidden={homeIndicatorHidden}
       gestureEnabled={isAndroid ? false : gestureEnabled}
       gestureResponseDistance={gestureResponseDistance}

@@ -195,6 +195,10 @@ A Boolean to that lets you opt out of insetting the header. You may want to * se
 
 Boolean indicating whether the navigation bar is translucent.
 
+####  `hideKeyboardOnSwipe` (iOS only)
+
+Whether the keyboard should hide when swiping to the previous screen. Defaults to `false`.
+
 #### `homeIndicatorHidden` (iOS only)
 
 Whether the home indicator should be hidden on this screen. Defaults to `false`.
@@ -433,6 +437,10 @@ When set to `true` focuses search bar automatically when screen is appearing. De
 The search field background color.
 
 By default bar tint color is translucent.
+
+#### `tintColor` (iOS only)
+
+The color for the cursor caret and cancel button text.
 
 #### `cancelButtonText` (iOS only)
 

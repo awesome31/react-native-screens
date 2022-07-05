@@ -122,6 +122,12 @@ export interface ScreenProps extends ViewProps {
    */
   homeIndicatorHidden?: boolean;
   /**
+   * Whether the keyboard should hide when swiping to the previous screen. Defaults to `false`.
+   *
+   * @platform ios
+   */
+  hideKeyboardOnSwipe?: boolean;
+  /**
    * Boolean indicating whether, when the Android default back button is clicked, the `pop` action should be performed on the native side or on the JS side to be able to prevent it.
    * Unfortunately the same behavior is not available on iOS since the behavior of native back button cannot be changed there.
    * Defaults to `false`.
@@ -438,6 +444,12 @@ export interface SearchBarProps {
    * The search field background color
    */
   barTintColor?: string;
+  /**
+   * The color for the cursor caret and cancel button text.
+   *
+   * @platform ios
+   */
+  tintColor?: string;
   /**
    * The text to be used instead of default `Cancel` button text
    *
